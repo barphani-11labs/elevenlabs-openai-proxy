@@ -41,7 +41,7 @@ async def stream_openai(payload: Dict[str, Any]):
                     continue
                 yield (line + "\n\n").encode("utf-8")
 
-@app.post("/v1/chat/completions")
+@app.post("/chat/completions")
 async def chat_completions(request: Request, x_proxy_secret: Optional[str] = Header(default=None)):
     guard(x_proxy_secret)
     payload = sanitize(await request.json())
