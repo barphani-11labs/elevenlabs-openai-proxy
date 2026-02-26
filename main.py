@@ -19,6 +19,17 @@ def guard(x_proxy_secret: Optional[str]):
 def sanitize(payload: Dict[str, Any]) -> Dict[str, Any]:
     payload.pop("elevenlabs_extra_body", None)
     payload.pop("user_id", None)
+
+    # NEW: strip ElevenLabs-only / unsupported OpenAI Chat Completions args
+    payload.pop("reasoning_effort", None)
+    payload.pop("max_output_tokens", None)  # sometimes sent by UIs; chat.completions uses max_tokens
+    payload.pop("temperature", None)  # optional: keep if you want, but safe to allow
+    payload.pop("top_p", None)        # optional
+
+    # Ensure correct token field for chat.completions
+    if "max_output_tokens" in payload and "max_tokens" not in payload:
+        payload["max_tokens"] = payload.pop("max_output_tokens")
+
     payload["stream"] = True
     return payload
 
