@@ -110,5 +110,4 @@ async def chat_completions(request: Request, x_proxy_secret: Optional[str] = Hea
     return StreamingResponse(stream_openai(payload), media_type="text/event-stream")
 @app.get("/health")
 async def health():
-    return JSONResponse({"ok": True, "ts": int(time.time())})
-```
+    return JSONResponse({"ok": True, "ts": int(time.time())}) 
