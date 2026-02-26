@@ -1,4 +1,4 @@
-```python
+python
 import os
 import time
 import asyncio
@@ -108,8 +108,6 @@ async def chat_completions(request: Request, x_proxy_secret: Optional[str] = Hea
     guard(x_proxy_secret)
     payload = sanitize(await request.json())
     return StreamingResponse(stream_openai(payload), media_type="text/event-stream")
-
-
 @app.get("/health")
 async def health():
     return JSONResponse({"ok": True, "ts": int(time.time())})
